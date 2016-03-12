@@ -1,0 +1,36 @@
+---
+# Copy the package to the destination node and installs it
+
+- name: Create project directory
+  become: yes
+  file:
+    path: "{{ deploy_path }}"
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ group }}"
+
+- name: Install Git
+  become: yes
+  apt:
+    name: git
+    update_cache: yes
+
+- name: Checkout Git app repository
+  git:
+    repo: https://github.com/rodynnz/python-env-example
+    dest: "{{ deploy_path }}"
+    clone: yes
+    accept_hostkey: yes
+    version: step-5
+
+- name: Create virtual enviroment
+  shell: pyvenv-3.5 env
+  args:
+    chdir: "{{ deploy_path }}"
+    executable: /bin/bash
+
+- name: Install package inside virtual enviroment
+  shell: "{{ deploy_path}}/env/bin/pip install ."
+  args:
+    chdir: "{{ deploy_path }}"
+    executable: /bin/bash

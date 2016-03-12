@@ -1,0 +1,12 @@
+---
+# Update the system software using it's packaging system
+
+- name: Update repository database
+  become: yes
+  apt:
+    update_cache: yes
+
+- name: Upgrade available packages
+  become: yes
+  apt:
+    upgrade: full

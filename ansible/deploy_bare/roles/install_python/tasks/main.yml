@@ -1,0 +1,54 @@
+---
+# Install necessary dependencies and build Python 3.5.1
+
+- name: Install required packages
+  become: yes
+  apt:
+    name: "{{ item }}"
+    update_cache: yes
+  with_items:
+    - libbz2-dev
+    - libncurses5-dev
+    - liblzma-dev
+    - libgdbm-dev
+    - libsqlite3-dev
+    - libreadline-dev
+    - libpq-dev
+    - build-essential
+    - unzip
+    - wget
+    - curl
+    - python-dev
+    - python-pip
+    - libssl-dev
+
+- name: Download Python sources
+  get_url:
+    url: https://www.python.org/ftp/python/3.5.1/Python-3.5.1.tar.xz
+    dest: /tmp
+    checksum: "md5:e9ea6f2623fffcdd871b7b19113fde80"
+
+- name: Extract Python sources
+  unarchive:
+    src: /tmp/Python-3.5.1.tar.xz
+    dest: /tmp
+    copy: no
+
+- name: Build Python (1/3 Configure step)
+  shell: ./configure
+  args:
+    chdir: /tmp/Python-3.5.1
+    executable: /bin/bash
+
+- name: Build Python (2/3 Make step)
+  shell: make
+  args:
+    chdir: /tmp/Python-3.5.1
+    executable: /bin/bash
+
+- name: Build Python (3/3 Install step)
+  become: yes
+  shell: make altinstall
+  args:
+    chdir: /tmp/Python-3.5.1
+    executable: /bin/bash

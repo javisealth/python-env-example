@@ -1,0 +1,11 @@
+---
+- hosts: backend
+  remote_user: vagrant
+  vars:
+    deploy_path: /opt/killer_app
+    user: vagrant
+    group: vagrant
+  roles:
+    - update_system_packages
+    - install_python
+    - deploy_app
