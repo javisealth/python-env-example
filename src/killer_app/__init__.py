@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-name = 'Killer App!'
+name = 'killer_app'
 version = '0.0.0'
 description = 'Example Killer App'
 author = 'Rodrigo Núñez Mujica'
