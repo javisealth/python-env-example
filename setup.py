@@ -39,4 +39,10 @@ setup(
     # Dependencies
     install_requires=install_requires,
 
+    # Entry points
+    entry_points={
+        'console_scripts': [
+            'killer_app = killer_app.main:main',
+        ],
+    }
 )
